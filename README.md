@@ -1,100 +1,78 @@
-# Functional-Programming
 
-1. Pure Functions (Reine Funktionen)
-Was genau sind pure Funktionen?
+# **README: Funktionale Programmierkonzepte**
 
-Stell dir eine Funktion wie eine mathematische Gleichung vor:
+Dieses Dokument erklärt die wichtigsten Konzepte der funktionalen Programmierung. Ziel ist es, die Theorie verständlich zu machen und dir zu zeigen, wie du diese Konzepte in der Praxis anwendest.
 
-    Sie nimmt Eingaben (Parameter).
-    Sie führt eine Berechnung durch.
-    Sie gibt ein Ergebnis zurück, ohne andere Teile des Programms zu verändern.
+---
 
-Eine pure Funktion bedeutet:
+## **1. Reine Funktionen (Pure Functions)**
 
-    Deterministisch: Gleiche Eingabe → Immer gleiche Ausgabe.
-    Beispiel: Die Funktion Add(2, 3) gibt immer 5 zurück, unabhängig von äusseren Umständen.
-    Keine Seiteneffekte: Eine Funktion darf keine globalen Variablen ändern, keine Daten schreiben oder lesen (z. B. aus einer Datei), und auch keine UI verändern.
+### **Definition**
+Eine reine Funktion ist eine Funktion, die:
+1. **Deterministisch ist**: Gleiche Eingaben führen immer zu denselben Ausgaben.
+2. **Keine Seiteneffekte hat**: Sie ändert keine globalen Variablen, greift nicht auf externe Datenquellen zu und beeinflusst nichts außerhalb ihres Scopes.
 
-Warum sind pure Funktionen wichtig?
+### **Vorteile**
+- **Einfach zu testen**: Du kannst Eingaben und Ausgaben isoliert überprüfen.  
+- **Vorhersehbares Verhalten**: Keine versteckten Abhängigkeiten, da alles nur von den Parametern abhängt.  
+- **Einfache Fehlersuche**: Da die Funktion keine Seiteneffekte hat, kannst du Fehler schnell finden.
 
-    Einfaches Testen: Du kannst vorhersagen, was eine Funktion tut, weil sie immer gleich arbeitet.
-    → Beispiel: Wenn ein Bug auftritt, kannst du sofort die Funktion isolieren und testen.
-    Vermeidung von Bugs: Es gibt keine "versteckten" Änderungen an globalen Variablen oder Daten.
-    Einfaches Debugging: Da die Funktion nur von ihrer Eingabe abhängt, ist der Fehler leichter zu finden.
+### **Beispiel**
+```csharp
+// Pure Function
+int Add(int a, int b) => a + b;
 
-Beispiele:
+// Eingabe: a = 2, b = 3
+// Ausgabe: 5
+```
 
-Pure Funktion:
-
-int Add(int a, int b) => a + b; 
-
-// Eingabe: a = 2, b = 3 → Ausgabe: 5
-
-Warum ist sie rein?
-
-    Die Ausgabe (a + b) hängt nur von den Eingaben ab.
-    Es gibt keine globalen Variablen, die verändert werden.
-
-Unreine Funktion (impure):
-
+**Nicht reine Funktion (Impure Function):**
+```csharp
 int AddAndChangeGlobal(int a, int b)
 {
     globalVar = a + b; // Ändert eine globale Variable (Seiteneffekt)
     return globalVar;
 }
+```
 
-Warum ist sie nicht rein?
+Diese Funktion ist nicht rein, da sie eine globale Variable beeinflusst. Änderungen an `globalVar` können zu schwer auffindbaren Fehlern führen.
 
-    Sie ändert eine globale Variable globalVar.
-    Das Ergebnis hängt nicht nur von a und b ab, sondern auch von globalVar.
+---
 
-2. Immutabilität
-Was ist das genau?
+## **2. Immutabilität**
 
-Immutabilität bedeutet, dass Daten unveränderlich sind. Wenn du Daten ändern möchtest, erstellst du eine neue Kopie der Daten anstelle der Änderung der Originaldaten.
-Warum ist Immutabilität wichtig?
+### **Definition**
+Immutabilität bedeutet, dass Daten nach ihrer Erstellung **nicht verändert werden**. Jede "Änderung" erzeugt eine neue Kopie der Daten.
 
-    Datenintegrität: Keine unabsichtlichen Änderungen.
-    Beispiel: Stell dir vor, du arbeitest mit einer Liste. Wenn jemand die Liste "still und heimlich" ändert, kann es schwer sein, Bugs zu finden.
-    Einfaches Debugging: Wenn Daten unveränderlich sind, weisst du, dass sie sich nach ihrer Erstellung nicht verändern.
-    Parallele Programmierung: Mehrere Threads können sicher mit denselben Daten arbeiten.
+### **Vorteile**
+- **Datenintegrität**: Daten bleiben unverändert, was unabsichtliche Änderungen verhindert.  
+- **Parallele Programmierung**: Unveränderliche Daten können sicher von mehreren Threads verwendet werden.  
+- **Vorhersehbares Verhalten**: Du weißt, dass Daten sich nicht verändern.
 
-Beispiele:
-
-Mutierbare Daten (Problem):
-
+### **Beispiel**
+```csharp
+// Mutable List (Problematisch)
 var list = new List<int> { 1, 2, 3 };
 list[0] = 42; // Ändert das Original
 
-Wenn mehrere Funktionen dieselbe Liste benutzen, könnte dies zu unerwarteten Problemen führen.
-
-Immutable Beispiel:
-
+// Immutable Example
 var list = new List<int> { 1, 2, 3 };
-var newList = list.Select(x => x * 2).ToList(); // Erstelle eine neue Liste
+var newList = list.Select(x => x * 2).ToList(); // Neue Kopie erstellen
+```
 
-Console.WriteLine(string.Join(", ", list));    // Original: 1, 2, 3
-Console.WriteLine(string.Join(", ", newList)); // Neu: 2, 4, 6
+---
 
-3. Function Chaining (Funktionsverkettung)
-Was ist das?
+## **3. Funktionsverkettung (Function Chaining)**
 
-Bei Function Chaining verkettest du mehrere Funktionen, indem du die Ausgabe einer Funktion direkt als Eingabe für die nächste Funktion nutzt.
-Warum ist das wichtig?
+### **Definition**
+Bei der Funktionsverkettung wird die Ausgabe einer Funktion direkt als Eingabe der nächsten Funktion verwendet.
 
-    Lesbarer Code: Anstatt viele Zwischenschritte zu speichern, kannst du die Transformation direkt nachvollziehen.
-    Weniger Fehleranfällig: Du veränderst keine globalen Variablen, da alles in einer Kette passiert.
+### **Vorteile**
+- **Lesbarer Code**: Transformationen sind in einer einzigen Kette sichtbar.  
+- **Keine unnötigen Variablen**: Alles passiert inline.
 
-Beispiel:
-
-Du möchtest:
-
-    Zahlen filtern (> 2).
-    Jede Zahl verdoppeln.
-    Die Zahlen sortieren.
-
-Mit Funktionsverkettung sieht das so aus:
-
+### **Beispiel**
+```csharp
 var numbers = new List<int> { 1, 2, 3, 4, 5 };
 
 var result = numbers
@@ -104,58 +82,64 @@ var result = numbers
     .ToList();           // Ergebnis: [6, 8, 10]
 
 Console.WriteLine(string.Join(", ", result));
+```
 
-4. Currying
-Was ist Currying?
+---
 
-Currying wandelt eine Funktion, die mehrere Parameter hat, in eine Reihe von Funktionen um, die jeweils nur einen Parameter akzeptieren.
-Warum ist das wichtig?
+## **4. Currying**
 
-    Wiederverwendbarkeit: Du kannst eine Funktion mit einem festen Parameter "vorbereiten".
-    Beispiel: Eine Steuerberechnung (TaxCalculator) für eine feste Steuer (19%).
+### **Definition**
+Currying wandelt eine Funktion mit mehreren Parametern in eine Serie von Funktionen um, die jeweils **einen Parameter** akzeptieren.
 
-Beispiel:
+### **Vorteile**
+- **Wiederverwendbarkeit**: Du kannst "Teile" der Funktion fixieren, um neue Funktionen zu erstellen.  
+- **Lesbarkeit**: Komplexe Funktionen werden in kleinere, verständlichere Teile zerlegt.
 
+### **Beispiel**
+```csharp
 // Currying-Funktion
 Func<int, Func<int, int>> Add = x => y => x + y;
 
-var add5 = Add(5);  // Erstellt eine neue Funktion, die 5 zu allem hinzufügt
-Console.WriteLine(add5(3)); // 8
-Console.WriteLine(add5(10)); // 15
+var add5 = Add(5);  // Erstellt eine Funktion, die 5 zu allem hinzufügt
+Console.WriteLine(add5(3)); // Ausgabe: 8
+```
 
-5. Higher-Order Functions
-Was ist das?
+---
 
+## **5. Funktionen höherer Ordnung (Higher-Order Functions)**
+
+### **Definition**
 Eine Funktion ist "höherer Ordnung", wenn sie:
+1. **Andere Funktionen als Parameter akzeptiert**, oder  
+2. **Eine Funktion zurückgibt.**
 
-    Andere Funktionen als Parameter nimmt, oder
-    Eine Funktion zurückgibt.
+### **Vorteile**
+- **Flexibilität**: Funktionen können kombiniert und wiederverwendet werden.  
+- **Weniger Code**: Du kannst generische Logik für viele Anwendungsfälle schreiben.
 
-Warum ist das wichtig?
-
-    Du kannst flexibel Funktionen kombinieren und Code wiederverwenden.
-    Sie ermöglichen komplexe Logik mit wenig Code.
-
-Beispiel:
-
+### **Beispiel**
+```csharp
+// Höhere Ordnung: Nimmt eine Funktion und ein Array
 Func<int, int> square = x => x * x;
 
 Func<int[], int[]> applyFunc = arr => arr.Select(square).ToArray();
 
 var result = applyFunc(new[] { 1, 2, 3 }); // Ergebnis: [1, 4, 9]
+```
 
-Hier wird applyFunc verwendet, um beliebige Funktionen wie square auf ein Array anzuwenden.
-6. Pattern Matching
-Was ist das?
+---
 
-Pattern Matching erlaubt dir, Daten oder Zustände direkt zu vergleichen und basierend darauf Aktionen auszuführen.
-Warum ist das wichtig?
+## **6. Pattern Matching**
 
-    Weniger Code: Du brauchst keine langen if- oder switch-Statements.
-    Klarheit: Dein Code ist strukturierter und einfacher zu lesen.
+### **Definition**
+Pattern Matching vergleicht Daten mit bestimmten Mustern und führt basierend darauf Operationen aus.
 
-Beispiel:
+### **Vorteile**
+- **Klarheit**: Komplexe Bedingungen werden einfacher zu lesen.  
+- **Weniger Code**: Spart lange `if`- oder `switch`-Statements.
 
+### **Beispiel**
+```csharp
 string CheckNumber(int number) => number switch
 {
     < 0 => "Negativ",
@@ -163,5 +147,14 @@ string CheckNumber(int number) => number switch
     > 0 => "Positiv"
 };
 
-Console.WriteLine(CheckNumber(-3)); // Negativ
-Console.WriteLine(CheckNumber(0));  // Null
+Console.WriteLine(CheckNumber(-3)); // Ausgabe: Negativ
+Console.WriteLine(CheckNumber(0));  // Ausgabe: Null
+```
+
+---
+
+## **Zusammenfassung**
+
+Diese Konzepte sind nicht nur theoretisch nützlich, sondern helfen dir dabei, **robusteren, wartbaren und testbaren Code** zu schreiben. Wenn du reine Funktionen, Immutabilität und Funktionsverkettung anwendest, kannst du Fehlerquellen minimieren und deinen Code einfacher verstehen.
+
+Falls du weitere Beispiele oder detailliertere Erklärungen brauchst, lass es mich wissen! 😊
