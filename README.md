@@ -1,7 +1,7 @@
 
 # **README: Funktionale Programmierkonzepte**
 
-Dieses Dokument erklärt die wichtigsten Konzepte der funktionalen Programmierung. Ziel ist es, die Theorie verständlich zu machen und dir zu zeigen, wie du diese Konzepte in der Praxis anwendest.
+Dieses Dokument erklärt die wichtigsten Konzepte der funktionalen Programmierung. Ziel ist es, die Theorie verständlich zu machen und zu zeigen, wie du diese Konzepte in der Praxis anwendest.
 
 ---
 
@@ -10,7 +10,7 @@ Dieses Dokument erklärt die wichtigsten Konzepte der funktionalen Programmierun
 ### **Definition**
 Eine reine Funktion ist eine Funktion, die:
 1. **Deterministisch ist**: Gleiche Eingaben führen immer zu denselben Ausgaben.
-2. **Keine Seiteneffekte hat**: Sie ändert keine globalen Variablen, greift nicht auf externe Datenquellen zu und beeinflusst nichts außerhalb ihres Scopes.
+2. **Keine Seiteneffekte hat**: Sie ändert keine globalen Variablen, greift nicht auf externe Datenquellen zu und beeinflusst nichts ausserhalb ihres Scopes.
 
 ### **Vorteile**
 - **Einfach zu testen**: Du kannst Eingaben und Ausgaben isoliert überprüfen.  
@@ -47,7 +47,7 @@ Immutabilität bedeutet, dass Daten nach ihrer Erstellung **nicht verändert wer
 ### **Vorteile**
 - **Datenintegrität**: Daten bleiben unverändert, was unabsichtliche Änderungen verhindert.  
 - **Parallele Programmierung**: Unveränderliche Daten können sicher von mehreren Threads verwendet werden.  
-- **Vorhersehbares Verhalten**: Du weißt, dass Daten sich nicht verändern.
+- **Vorhersehbares Verhalten**: Du weisst, dass Daten sich nicht verändern.
 
 ### **Beispiel**
 ```csharp
@@ -156,5 +156,3 @@ Console.WriteLine(CheckNumber(0));  // Ausgabe: Null
 ## **Zusammenfassung**
 
 Diese Konzepte sind nicht nur theoretisch nützlich, sondern helfen dir dabei, **robusteren, wartbaren und testbaren Code** zu schreiben. Wenn du reine Funktionen, Immutabilität und Funktionsverkettung anwendest, kannst du Fehlerquellen minimieren und deinen Code einfacher verstehen.
-
-Falls du weitere Beispiele oder detailliertere Erklärungen brauchst, lass es mich wissen! 😊
